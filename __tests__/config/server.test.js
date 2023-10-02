@@ -92,10 +92,9 @@ describe('insert', () => {
 });*/
 
 ////////////////////////////////////////////
-const express = require('express');
-const cors = require('cors');
-const Server = require('./../../src/config/server'); // Adjust the path accordingly
-const Database = require('./../../src/config/db');
+import express from 'express';
+import { Server } from '../../src/config/server.js';
+import { Database } from '../../src/config/db.js';
 
 // Mocking Database class
 jest.mock('./../../src/config/db', () => {

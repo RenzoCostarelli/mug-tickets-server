@@ -3,20 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "engines": {
     "node": "18.x"
   },
   "scripts": {
     "test": "jest",
-    "start": "node index.js",
-    "dev": "set NODE_ENV=development&& nodemon index.js",
-    "prod": "set NODE_ENV=production&& node index.js",
+    "start": "nodemon index.js",
+    "dev": "nodemon index.js",
+    "prod": "nodemon index.js",
     "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "apicache": "^1.6.3",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.40.0",
@@ -26,13 +28,19 @@
     "express-fileupload": "^1.4.0",
     "express-validator": "^7.0.1",
     "google-auth-library": "^8.9.0",
-    "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
     "memory-cache": "^0.2.0",
     "mercadopago": "^1.5.17",
     "mogodb": "^0.0.1-security",
     "mongodb-memory-server": "^8.12.2",
     "mongoose": "^7.0.3",
+    "nodemailer": "^6.9.5",
+    "nodemailer-express-handlebars": "^6.1.0",
+    "pdfkit": "^0.13.0",
+    "qrcode": "^1.5.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui": "^5.4.2",
+    "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -41,6 +49,7 @@
     "jest-environment-jsdom": "^29.5.0",
     "jsdom": "^22.0.0",
     "nodemon": "^2.0.22",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "typescript": "^5.2.2"
   }
 }

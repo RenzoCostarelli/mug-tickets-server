@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+import mongoose from 'mongoose';
 /**
  * Mongoose schema for the 'admin' collection.
  */
@@ -56,4 +55,6 @@ adminSchema.method('toJSON', function() {
  * Mongoose model for the 'Admin' collection based on the 'adminSchema'.
  */
 const Admin = mongoose.model('Admin', adminSchema);
-module.exports = Admin;
+export {
+  Admin
+};

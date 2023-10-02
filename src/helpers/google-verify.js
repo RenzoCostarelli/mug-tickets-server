@@ -1,4 +1,5 @@
-const { OAuth2Client } = require('google-auth-library');
+import { OAuth2Client } from 'google-auth-library';
+import 'dotenv/config'
 const client = new OAuth2Client(process.env.GOOGLE_SECRET_ID);
 
 /**
@@ -27,6 +28,6 @@ const googleVerify = async (token) => {
   }
 }
 
-module.exports = {
+export {
     googleVerify
 };

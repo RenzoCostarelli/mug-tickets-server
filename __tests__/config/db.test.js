@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
-const Database = require('./../../src/config/db');
+import mongoose from 'mongoose';
+import { Database } from './../../src/config/db.js';
 
 // Load environment variables from .env file (if any)
-require('dotenv').config();
+import * as dotenv from 'dotenv';
 
 describe('Database', () => {
   let db;

@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+import mongoose from 'mongoose';
 /**
  * Mongoose schema for the 'ticket' collection.
  */
@@ -19,7 +18,15 @@ const ticketSchema = new mongoose.Schema({
     },
     purchaserId: {
       type: String,
+      required: false
+    },
+    purchaserDni: {
+      type: Number,
       required: true
+    },
+    purchaserEmail: {
+      type: String,
+      trim: true
     }
   },
   attendee: {
@@ -70,6 +77,10 @@ const ticketSchema = new mongoose.Schema({
 ticketSchema.method('toJSON', function() {
   const { __v, _id, ... object } = this.toObject();
   object.ticketId = _id;
+  object.ticketNumber = (object.ticketNumber).toLocaleString('en-US', {
+    minimumIntegerDigits: 7, 
+    useGrouping:false
+  })
   return object;
 });
 
@@ -77,4 +88,6 @@ ticketSchema.method('toJSON', function() {
  * Mongoose model for the 'Ticket' collection based on the 'ticketSchema'.
  */
 const Ticket = mongoose.model('Ticket', ticketSchema);
-module.exports = Ticket;
+export {
+  Ticket
+};

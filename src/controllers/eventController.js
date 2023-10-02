@@ -1,6 +1,6 @@
-const { response } = require('express');
-const Event = require('../models/eventModel');
-const Admin = require('../models/adminModel');
+import { response } from 'express';
+import {Event} from '../models/eventModel.js';
+import {Admin} from '../models/adminModel.js';
 
 /**
  * Controller class for handling event-related operations.
@@ -17,8 +17,13 @@ class EventController {
      */
     async getAll(req, res = response) {
       try {
-        const events = await Event.find({})/*.populate('purchasedTicketsList');*/
-
+        /*const events = await Event.find({
+          date: {
+              $gt: new Date()
+          }
+        }).sort({ date: 1 }).populate('purchasedTicketsList');*/
+        const events = await Event.find({}).populate('ticketsTypeList');
+        
         res.status(200).json({
           ok: true,
           events
@@ -78,7 +83,7 @@ class EventController {
           title, 
           description,
           address, 
-          date,
+          dates,
           image,
           price
         } = req.body;
@@ -91,10 +96,17 @@ class EventController {
           title, 
           description,
           address, 
-          date,
+          dates,
           image,
           price      
         });
+
+        if (!creatorId) {
+          return res.status(404).json({ 
+            ok: false, 
+            error: `Missing creator Id ${creatorId}.` 
+          });
+        }
 
         const admin = await Admin.findById(creatorId);
         const savedNewEvent = await newEvent.save();
@@ -124,7 +136,7 @@ class EventController {
     async get(req, res = response) {      
       try {
         const { id } = req.params;
-        const event = await Event.findById(id)/*.populate('purchasedTicketsList')*/;
+        const event = await Event.findById(id).populate('ticketsTypeList');
         if (!event) {
           return res.status(404).json({ 
             ok: false, 
@@ -153,14 +165,27 @@ class EventController {
      */
     async update(req, res = response) {
       const { id } = req.params;
-      const { name, description } = req.body;
+      const {
+        eventType,
+        hasLimitedPlaces,
+        ticketsAvailableOnline,
+        title, 
+        description,
+        address
+      } = req.body;
 
       try {
-        const updatedEvent = await Event.findByIdAndUpdate(id, { name, description }, { new: true });
+        const updatedEvent = await Event.findByIdAndUpdate(id, {
+          eventType,
+          hasLimitedPlaces,
+          title, 
+          description,
+          address,
+          ticketsAvailableOnline,
+        }, { new: true });
+        
         if (!updatedEvent) {
-          return res
-            .status(404)
-            .json({ 
+          return res.status(404).json({ 
               ok: false, 
               error: `Event with id ${id} not found.` 
             });
@@ -210,6 +235,6 @@ class EventController {
     }
 }
 
-module.exports = { 
+export { 
   EventController 
 };

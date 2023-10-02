@@ -1,9 +1,7 @@
-const { response } = require('express');
-const bcryptjs = require('bcryptjs');
-
-const User = require('../models/userModel');
-const { generateJWT } = require('../config/authentication');
-
+import { response } from 'express'; 
+import bcryptjs from 'bcryptjs';
+import { User } from '../models/userModel.js';
+import { generateJWT } from '../config/authentication.js';
 /**
  * Controller class for handling user-related operations.
  */
@@ -254,6 +252,6 @@ class UserController {
     }
 }
 
-module.exports = {
+export {
   UserController
 };

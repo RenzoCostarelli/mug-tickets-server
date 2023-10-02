@@ -1,7 +1,6 @@
-const jwt = require('jsonwebtoken');
-const config = require('./server');
-const User = require('../models/userModel');
-
+import jwt from 'jsonwebtoken';
+import 'dotenv/config'
+import { User } from '../models/userModel.js';
 /**
  * Middleware function to authenticate incoming requests using JSON Web Tokens (JWT).
  *
@@ -17,7 +16,7 @@ const auth = async (req, res, next) => {
     const decoded = jwt.verify(token, config.jwt.secret);
     const user = await User.findOne({ 
       _id: decoded._id, 
-      'tokens.token': token 
+      'tokens.token': token
     });
 
     if (!user) {
@@ -60,7 +59,7 @@ const generateJWT = ( uid ) => new Promise((resolve, reject) => {
 });
 
 
-module.exports = {
+export {
   auth,
   generateJWT
 };

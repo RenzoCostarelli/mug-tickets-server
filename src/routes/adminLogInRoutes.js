@@ -1,11 +1,11 @@
-const { Router } = require('express');
+import { Router } from 'express';
 const router = Router();
 
-const { check } = require('express-validator');
-const ValidationsMiddlewares  = require('../middlewares/validationMiddleware');
+import { check } from 'express-validator';
+import { ValidationsMiddlewares }  from '../middlewares/validationMiddleware.js';
 const validationsMiddlewares = new ValidationsMiddlewares();
 
-const { AdminLogInController } = require('../controllers/adminLogInController');
+import { AdminLogInController } from '../controllers/adminLogInController.js';
 const adminLogInController = new AdminLogInController();
 
 // Route: POST /api/login
@@ -31,4 +31,6 @@ router.post('/google',
     ],
     adminLogInController.googleSignIn);
 
-module.exports = router;
+export {
+    router
+};

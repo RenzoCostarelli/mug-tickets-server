@@ -1,14 +1,15 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const User = require('../models/userModel');
-const Event = require('../models/eventModel');
+import { User } from '../models/userModel.js';
+import { Event } from '../models/eventModel.js';
 
 /**
  * Function to update the image path for a user or event based on the given options.
  * @param {Object} options - Options object containing 'type', 'id', and 'fileName'.
  */
-const updateImages = (options = {}) => {
-    const { type, id, url } = options;
+const updateImages = async (options = {}) => {
+    const { type, eventId, url } = options;
+
     try{
         // Define actions based on the 'type' (user, events, tickets)
         const action = {
@@ -32,7 +33,7 @@ const updateImages = (options = {}) => {
             },
             events: async () => {
                 // Find the event by ID
-                const event = await Event.findById(id);           
+                const event = await Event.findById(eventId);           
                 if(!event) {
                     return false;
                 }
@@ -72,6 +73,6 @@ const _replacePrevPath = (imageData = {}) => {
     }
 };
 
-module.exports = {
+export {
     updateImages
 };

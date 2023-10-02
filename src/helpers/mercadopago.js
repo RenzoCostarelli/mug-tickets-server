@@ -1,4 +1,5 @@
-const mercadopago = require("mercadopago");
+import mercadopago from 'mercadopago';
+import 'dotenv/config'
 
 /**
  * Creates a transaction using MercadoPago API.
@@ -55,6 +56,6 @@ const createTransaction = async (options = {}) => {
     }
 };
 
-module.exports = {
+export {
     createTransaction
 };

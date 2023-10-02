@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Welcome Email</title>
+</head>
+<body>
+    {{!-- {{#each tickets}}
+    <li>
+         {{#each this}}
+          {{#each this}}
+
+          <p class="row">{{purchaserFirstName}} {{purchaserLastName}} {{purchaserDni}}</p>
+          {{/each}}  
+
+        {{/each}}
+    </li>
+    {{/each}} --}}
+    {{#each tickets}}
+      <h3 style="margin: 0;">Ticket {{@key}}</h3>
+      <ul style="list-style-type: none;">
+      {{#each this}}
+        {{#each purchaser}}
+          <li>{{this}}</li>
+        {{/each}}
+      {{/each}} 
+      </ul> 
+    {{/each}}
+    <p>Felicitaciones!! Acabamos de enviarte el/los Qrs para validar el acceso al evento</p>
+</body>
+</html>

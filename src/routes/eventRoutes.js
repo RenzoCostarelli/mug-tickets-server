@@ -1,10 +1,10 @@
-const { Router } = require('express');
+import { Router } from 'express';
 const router = Router();
 
-const { check } = require('express-validator');
-const ValidationsMiddlewares  = require('../middlewares/validationMiddleware');
-const { EventController } = require('../controllers/eventController');
-const CacheMiddleware = require('../middlewares/cacheMiddleware');
+import { check } from 'express-validator';
+import {ValidationsMiddlewares} from '../middlewares/validationMiddleware.js';
+import { EventController } from '../controllers/eventController.js';
+import * as CacheMiddleware from '../middlewares/cacheMiddleware.js';
 
 const validationsMiddlewares = new ValidationsMiddlewares();
 
@@ -16,7 +16,7 @@ const eventController = new EventController();
 router.get('/', 
     [
         //validationsMiddlewares.validateIfAdmin,
-        CacheMiddleware()
+        //CacheMiddleware()
     ], 
     eventController.getAll);
 
@@ -35,12 +35,13 @@ router.post('/',
     [
         validationsMiddlewares.validateJWT,
         validationsMiddlewares.validateIfAdmin,
+        check('creatorId', 'Creator id is required').not().isEmpty(),
         check('eventType', 'Event type is required').not().isEmpty(),
-        check('ticketPurchaseDeadline', 'Ticket purchase deadline is required').not().isEmpty(),
         check('title', 'Show title is required').not().isEmpty(),
         check('description', 'Show description is required').not().isEmpty(),
         check('address', 'Show address is required').not().isEmpty(),
-        check('date', 'Show date is required').not().isEmpty(),  
+        //check('dates', 'Dates array is required and must be an array').isArray({ min: 1 }),
+        //check('dates.*.date', 'Date is required for each ticket').not().isEmpty(), 
         validationsMiddlewares.validateFields,
     ],
     eventController.create);
@@ -61,11 +62,11 @@ router.put('/:id',
         validationsMiddlewares.validateJWT,
         validationsMiddlewares.validateIfAdmin,
         check('eventType', 'Event type is required').not().isEmpty(),
-        check('ticketPurchaseDeadline', 'Ticket purchase deadline is required').not().isEmpty(),
+        //check('ticketPurchaseDeadline', 'Ticket purchase deadline is required').not().isEmpty(),
         check('title', 'Show title is required').not().isEmpty(),
         check('description', 'Show description is required').not().isEmpty(),
         check('address', 'Show address is required').not().isEmpty(),
-        check('date', 'Show date is required').not().isEmpty(),  
+        //check('date', 'Show date is required').not().isEmpty(),  
         validationsMiddlewares.validateFields
     ], 
     eventController.update);
@@ -80,4 +81,6 @@ router.delete('/:id',
     ], 
     eventController.delete);
 
-module.exports = router;
+export {
+    router
+};

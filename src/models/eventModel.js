@@ -1,10 +1,14 @@
-const mongoose = require('mongoose');
-const Counter = require('./counterModel');
+import mongoose from 'mongoose';
+import { Counter } from './counterModel.js';
 
 /**
  * Mongoose schema for the 'event' collection.
  */
-const eventSchema = new mongoose.Schema({
+const eventSchema = new mongoose.Schema({  
+  creatorId: {
+    type: String,
+    required: false,
+  },
   eventType: {
     type: String,
     required: true,
@@ -22,7 +26,7 @@ const eventSchema = new mongoose.Schema({
   },
   ticketPurchaseDeadline: {
     type: Date,
-    required: true
+    required: false
   },
   hasLimitedPlaces: {
     type: Boolean,
@@ -41,10 +45,12 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
-    required: true,
-  },
+  dates: [{
+    date: {
+      type: Date,
+      required: false
+    }
+  }],
   image: {
     type: String,
     required: false
@@ -61,6 +67,10 @@ const eventSchema = new mongoose.Schema({
   purchasedTicketsList: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Ticket'
+  }],
+  ticketsTypeList: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'TicketType'
   }]
 });
 
@@ -103,4 +113,6 @@ eventSchema.method('toJSON', function() {
  * Adds 'eventId' field using the '_id' field for the returned JSON object.
  */
 const Event = mongoose.model('Event', eventSchema);
-module.exports = Event;
+export {
+  Event 
+};

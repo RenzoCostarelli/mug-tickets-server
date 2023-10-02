@@ -1,6 +1,7 @@
-const mcache = require('memory-cache');
+import mcache from 'memory-cache';
+import 'dotenv/config'
 
-module.exports = function (duration = 60) {
+export default function (duration = 60) {
     return (req, res, next) => {
         const key = process.env.CACHE_KEY + req.originUrl || req.url;
         const cachedBody = mcache.get(key);

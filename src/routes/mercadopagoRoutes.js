@@ -1,7 +1,7 @@
-const { Router } = require('express');
+import { Router } from 'express';
 const router = Router();
 
-const { MercadopagoController } = require('../controllers/mercadopagoController');
+import { MercadopagoController } from '../controllers/mercadopagoController.js';
 const mercadopago = new MercadopagoController();
 
 // Route: POST /api/checkout/create_preference
@@ -12,4 +12,6 @@ router.post('/create_preference', mercadopago.create);
 // Controller: mercadopago.feedback (Controller method to handle MercadoPago feedback after payment)
 router.get('/feedback', mercadopago.feedback);
 
-module.exports = router;
+export {
+    router
+};

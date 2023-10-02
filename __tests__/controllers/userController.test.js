@@ -192,9 +192,9 @@ describe('UserController', () => {
   });
 });*/
 
-const { UserController } = require('./../../src/controllers/userController');
-const User = require('./../../src/models/userModel');
-const { generateJWT } = require('./../../src/config/authentication');
+import { UserController } from './../../src/controllers/userController.js';
+import { User } from './../../src/models/userModel.js';
+import { generateJWT } from './../../src/config/authentication.js';
 
 jest.mock('./../../src/models/userModel', () => {
   return {

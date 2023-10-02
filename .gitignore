@@ -133,5 +133,5 @@ dist
 
 # Adde docs on develepment
 uploads
-#src/config/.env.development
-#src/config/.env.production
+.env.development
+.env.production

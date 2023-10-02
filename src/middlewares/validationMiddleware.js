@@ -1,8 +1,8 @@
-const { response } = require('express');
-const Admin = require('./../models/adminModel');
-const { validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
-
+import { response } from 'express';
+import { validationResult } from 'express-validator';
+import { Admin } from'./../models/adminModel.js';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config'
 /**
  * Middleware class containing validation methods for request fields, JWT tokens, and admin privileges.
  */
@@ -98,4 +98,6 @@ class ValidationsMiddlewares {
   }
 }
 
-module.exports = ValidationsMiddlewares;
+export {
+  ValidationsMiddlewares
+};

@@ -1,9 +1,9 @@
-const { response } = require('express');
-const bcryptjs = require('bcryptjs');
+import { response } from 'express';
+import bcryptjs from 'bcryptjs';
 
-const User = require('../models/userModel');
-const { generateJWT } = require('../config/authentication');
-const { googleVerify } = require('../helpers/google-verify');
+import { User } from '../models/userModel.js';
+import { generateJWT } from '../config/authentication.js';
+import { googleVerify } from '../helpers/google-verify.js';
 
 /**
  * Controller class for handling user login-related operations.
@@ -22,6 +22,7 @@ class LogInController {
         const { email, password } = req.body;
         try {
             const user = await User.findOne({ email });
+
             if (!user) {
                 return res.status(404).json({
                     ok: false,
@@ -38,8 +39,12 @@ class LogInController {
             }
 
             const token = await generateJWT(user._id);
+            const { firstName, image } = user;
             res.status(200).json({
                 ok: true,
+                firstName,
+                email,
+                image,
                 token
             });
         } catch (err) {
@@ -82,7 +87,6 @@ class LogInController {
             await newUser.save();
             const newToken = await generateJWT(newUser.id);
 
-
             res.status(200).json({
                 ok: true,
                 name,
@@ -99,6 +103,6 @@ class LogInController {
     }
 }
 
-module.exports = {
+export {
     LogInController
 };

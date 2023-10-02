@@ -1,20 +1,29 @@
-const config = require('../config/config');
-const cloudinary = require('cloudinary').v2;
+import { v2 as cloudinary } from 'cloudinary';
+import 'dotenv/config';
 
 cloudinary.config({ 
-  cloud_name: config.CLOUD_NAME, 
-  api_key: config.CLOUDINARY_KEY,
-  api_secret:  config.CLOUDINARY_SECRET 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret:  process.env.CLOUDINARY_SECRET 
 });
 
-const uploadCloudImage = async (filePath = '', folder = '') => {
-    return await cloudinary.uploader.upload(filePath, {
-        folder,
-    }, (error, result) => {
-        error? console.log(error) : ''
+const uploadCloudImage = async (file, folder = '') => {
+    const arrBuf = file.buffer();
+    const buffer = Buffer.from(arrBuf);
+    console.log("🚀 ~ newFile:", buffer)
+    
+    return await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream({
+            folder
+        }, (err, result) => {
+            if(err) {
+                reject(err);
+            }  
+            resolve(result);
+        }).end(buffer);
     });
 }
 
-module.exports = {
+export {
     uploadCloudImage
 };
